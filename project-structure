@@ -2,4 +2,7 @@ netlify-auth-template/
 ├── index.html
 ├── styles.css
 ├── app.js
-└── netlify.toml 
+├── netlify.toml
+└── netlify/
+    └── functions/
+        └── init-identity.js 

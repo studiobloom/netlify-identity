@@ -1,7 +1,14 @@
 [build]
   publish = "."
+  functions = "netlify/functions"
 
 [[redirects]]
   from = "/*"
   to = "/index.html"
-  status = 200 
+  status = 200
+
+[dev]
+  functions = "netlify/functions"
+
+[template.environment]
+  NETLIFY_IDENTITY_ENABLED = "true" 
