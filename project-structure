@@ -1,0 +1,5 @@
+netlify-auth-template/
+├── index.html
+├── styles.css
+├── app.js
+└── netlify.toml 

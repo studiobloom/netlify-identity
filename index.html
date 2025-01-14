@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netlify Auth Template</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Your Site</h1>
+        
+        <div class="auth-buttons">
+            <button onclick="netlifyIdentity.open()">Log In / Sign Up</button>
+        </div>
+
+        <div class="user-info" style="display: none;">
+            <h2>Welcome, <span id="user-name">User</span>!</h2>
+            <button onclick="netlifyIdentity.logout()">Log Out</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html> 
