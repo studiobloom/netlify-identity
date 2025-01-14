@@ -6,27 +6,46 @@
     <title>Netlify Auth Template</title>
     <link rel="stylesheet" href="styles.css">
     <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
-    <script>
-        // Check if running locally
-        if (window.location.hostname === "localhost") {
-            // Initialize Identity in local dev
-            const script = document.createElement("script");
-            script.src = "https://identity.netlify.com/v1/netlify-identity-widget.js";
-            document.head.appendChild(script);
-        }
-    </script>
 </head>
 <body>
     <div class="container">
         <h1>Welcome to Your Site</h1>
         
-        <div class="auth-buttons">
-            <button onclick="netlifyIdentity.open()">Log In / Sign Up</button>
+        <div id="auth-forms">
+            <!-- Login Form -->
+            <form id="login-form" class="auth-form">
+                <h2>Sign In</h2>
+                <div class="form-group">
+                    <input type="email" id="login-email" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="login-password" placeholder="Password" required>
+                </div>
+                <button type="submit">Sign In</button>
+                <p class="form-switch">
+                    Don't have an account? <a href="#" onclick="toggleForms('signup')">Sign Up</a>
+                </p>
+            </form>
+
+            <!-- Signup Form -->
+            <form id="signup-form" class="auth-form" style="display: none;">
+                <h2>Create Account</h2>
+                <div class="form-group">
+                    <input type="email" id="signup-email" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <input type="password" id="signup-password" placeholder="Password" required>
+                </div>
+                <button type="submit">Sign Up</button>
+                <p class="form-switch">
+                    Already have an account? <a href="#" onclick="toggleForms('login')">Sign In</a>
+                </p>
+            </form>
         </div>
 
-        <div class="user-info" style="display: none;">
+        <div id="user-info" style="display: none;">
             <h2>Welcome, <span id="user-name">User</span>!</h2>
-            <button onclick="netlifyIdentity.logout()">Log Out</button>
+            <button onclick="handleLogout()">Log Out</button>
         </div>
     </div>
 

@@ -25,4 +25,92 @@ button:hover {
 
 .user-info {
     margin-top: 20px;
+}
+
+/* Style the widget container */
+.netlify-identity-widget {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Style the modal backdrop */
+.netlify-identity-widget-overlay {
+    background: rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Style the close button */
+.netlify-identity-widget .modal-close {
+    color: #666 !important;
+}
+
+/* Style form labels */
+.netlify-identity-widget label {
+    color: #333 !important;
+    font-weight: 500 !important;
+}
+
+/* Style error messages */
+.netlify-identity-widget .error {
+    color: #d32f2f !important;
+    background: #ffebee !important;
+    border-radius: 4px !important;
+    padding: 8px !important;
+}
+
+/* Style success messages */
+.netlify-identity-widget .success {
+    color: #388e3c !important;
+    background: #e8f5e9 !important;
+    border-radius: 4px !important;
+    padding: 8px !important;
+}
+
+.auth-form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #2196f3;
+    box-shadow: 0 0 0 2px rgba(33,150,243,0.2);
+}
+
+.form-switch {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.form-switch a {
+    color: #2196f3;
+    text-decoration: none;
+}
+
+.form-switch a:hover {
+    text-decoration: underline;
+}
+
+.error-message {
+    color: #d32f2f;
+    background: #ffebee;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    display: none;
 } 
