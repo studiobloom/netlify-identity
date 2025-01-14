@@ -5,10 +5,6 @@
     text-align: center;
 }
 
-.auth-buttons {
-    margin: 20px 0;
-}
-
 button {
     padding: 10px 20px;
     font-size: 16px;
@@ -21,47 +17,6 @@ button {
 
 button:hover {
     background-color: #1976d2;
-}
-
-.user-info {
-    margin-top: 20px;
-}
-
-/* Style the widget container */
-.netlify-identity-widget {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-}
-
-/* Style the modal backdrop */
-.netlify-identity-widget-overlay {
-    background: rgba(0, 0, 0, 0.5) !important;
-}
-
-/* Style the close button */
-.netlify-identity-widget .modal-close {
-    color: #666 !important;
-}
-
-/* Style form labels */
-.netlify-identity-widget label {
-    color: #333 !important;
-    font-weight: 500 !important;
-}
-
-/* Style error messages */
-.netlify-identity-widget .error {
-    color: #d32f2f !important;
-    background: #ffebee !important;
-    border-radius: 4px !important;
-    padding: 8px !important;
-}
-
-/* Style success messages */
-.netlify-identity-widget .success {
-    color: #388e3c !important;
-    background: #e8f5e9 !important;
-    border-radius: 4px !important;
-    padding: 8px !important;
 }
 
 .auth-form {

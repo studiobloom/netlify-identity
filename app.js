@@ -8,12 +8,10 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
     const password = document.getElementById('login-password').value;
     
     try {
-        await netlifyIdentity.gotrue.login({
-            email,
-            password
-        }).then(response => {
-            handleUserLoggedIn(response);
-        });
+        // Create a new GoTrue client
+        const client = netlifyIdentity.gotrue;
+        const response = await client.login(email, password, true);
+        handleUserLoggedIn(response);
     } catch (error) {
         showError('login-form', error.message);
     }
@@ -25,16 +23,14 @@ document.getElementById('signup-form').addEventListener('submit', async (e) => {
     const password = document.getElementById('signup-password').value;
     
     try {
-        await netlifyIdentity.gotrue.signup({
-            email,
-            password
-        }).then(response => {
-            if (response.confirmed_at) {
-                handleUserLoggedIn(response);
-            } else {
-                showError('signup-form', 'Please confirm your email address to complete signup');
-            }
-        });
+        // Create a new GoTrue client
+        const client = netlifyIdentity.gotrue;
+        const response = await client.signup(email, password);
+        if (response.confirmed_at) {
+            handleUserLoggedIn(response);
+        } else {
+            showError('signup-form', 'Please confirm your email address to complete signup');
+        }
     } catch (error) {
         showError('signup-form', error.message);
     }
