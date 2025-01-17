@@ -6,6 +6,11 @@
     <title>Netlify Auth Template</title>
     <link rel="stylesheet" href="styles.css">
     <script type="text/javascript" src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+        // Inject environment variables
+        const STRIPE_PUBLISHABLE_KEY = '%STRIPE_PUBLISHABLE_KEY%';
+    </script>
 </head>
 <body>
     <div class="container">
@@ -27,7 +32,7 @@
                 </p>
             </form>
 
-            <!-- Signup Form -->
+            <!-- Signup Form with Subscription Choice -->
             <form id="signup-form" class="auth-form" style="display: none;">
                 <h2>Create Account</h2>
                 <div class="form-group">
@@ -36,7 +41,33 @@
                 <div class="form-group">
                     <input type="password" id="signup-password" placeholder="Password" required>
                 </div>
-                <button type="submit">Sign Up</button>
+                <div class="account-type-selector">
+                    <h3>Choose Account Type</h3>
+                    <div class="account-options">
+                        <div class="account-option">
+                            <input type="radio" id="free-account" name="account-type" value="free" checked>
+                            <label for="free-account">
+                                <strong>Free Account</strong>
+                                <span class="account-description">Basic access to the platform</span>
+                            </label>
+                        </div>
+                        <div class="account-option">
+                            <input type="radio" id="premium-account" name="account-type" value="premium">
+                            <label for="premium-account">
+                                <strong>Premium Account</strong>
+                                <span class="account-description">Full access to all features</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div id="payment-section" style="display: none;">
+                    <div class="form-group">
+                        <label for="signup-card">Credit or debit card</label>
+                        <div id="signup-card"></div>
+                        <div class="card-errors" role="alert"></div>
+                    </div>
+                </div>
+                <button type="submit" id="signup-button">Create Account</button>
                 <p class="form-switch">
                     Already have an account? <a href="#" onclick="toggleForms('login')">Sign In</a>
                 </p>
@@ -45,6 +76,24 @@
 
         <div id="user-info" style="display: none;">
             <h2>Welcome, <span id="user-name">User</span>!</h2>
+            <div id="subscription-info">
+                <div class="subscription-status">
+                    <h3>Subscription Status</h3>
+                    <p id="subscription-status-message">Loading...</p>
+                </div>
+                <div id="upgrade-section" style="display: none;">
+                    <h3>Upgrade to Premium</h3>
+                    <button id="upgrade-subscription" class="primary-button">Upgrade to Premium</button>
+                    <div id="upgrade-payment-info" style="display: none;">
+                        <div class="form-group">
+                            <label for="upgrade-card">Credit or debit card</label>
+                            <div id="upgrade-card"></div>
+                            <div class="card-errors" role="alert"></div>
+                        </div>
+                    </div>
+                </div>
+                <button id="cancel-subscription" class="danger-button" style="display: none;">Cancel Subscription</button>
+            </div>
             <button onclick="handleLogout()">Log Out</button>
         </div>
     </div>

@@ -1,31 +1,14 @@
 .container {
-    max-width: 800px;
+    max-width: 600px;
     margin: 0 auto;
     padding: 20px;
-    text-align: center;
-}
-
-button {
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    background-color: #2196f3;
-    color: white;
-    border: none;
-    border-radius: 4px;
-}
-
-button:hover {
-    background-color: #1976d2;
 }
 
 .auth-form {
-    max-width: 400px;
-    margin: 0 auto;
+    background: #fff;
     padding: 20px;
-    background: #ffffff;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .form-group {
@@ -34,38 +17,183 @@ button:hover {
 
 .form-group input {
     width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+#card-element {
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
-    font-size: 16px;
+    background: white;
 }
 
-.form-group input:focus {
-    outline: none;
-    border-color: #2196f3;
-    box-shadow: 0 0 0 2px rgba(33,150,243,0.2);
+#card-errors {
+    color: #dc3545;
+    font-size: 14px;
+    margin-top: 5px;
 }
 
-.form-switch {
-    margin-top: 15px;
-    text-align: center;
+.subscription-notice {
+    background: #f8f9fa;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    color: #666;
     font-size: 14px;
 }
 
+button {
+    width: 100%;
+    padding: 10px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #0056b3;
+}
+
+.form-switch {
+    text-align: center;
+    margin-top: 15px;
+}
+
 .form-switch a {
-    color: #2196f3;
+    color: #007bff;
     text-decoration: none;
 }
 
-.form-switch a:hover {
-    text-decoration: underline;
-}
-
 .error-message {
-    color: #d32f2f;
-    background: #ffebee;
+    color: #dc3545;
+    background: #f8d7da;
     padding: 10px;
     border-radius: 4px;
     margin-bottom: 15px;
     display: none;
+}
+
+#subscription-info {
+    margin: 20px 0;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.subscription-status {
+    margin-bottom: 15px;
+}
+
+.subscription-status h3 {
+    margin: 0 0 10px 0;
+    color: #333;
+}
+
+.danger-button {
+    background: #dc3545;
+}
+
+.danger-button:hover {
+    background: #c82333;
+}
+
+.account-type-selector {
+    margin: 20px 0;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.account-options {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+}
+
+.account-option {
+    flex: 1;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.account-option:hover {
+    border-color: #007bff;
+}
+
+.account-option input[type="radio"] {
+    display: none;
+}
+
+.account-option input[type="radio"]:checked + label {
+    color: #007bff;
+}
+
+.account-option label {
+    display: block;
+    cursor: pointer;
+}
+
+.account-description {
+    display: block;
+    font-size: 14px;
+    color: #666;
+    margin-top: 5px;
+}
+
+.primary-button {
+    background: #28a745;
+}
+
+.primary-button:hover {
+    background: #218838;
+}
+
+#payment-section {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #ddd;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.secondary-button {
+    background: #6c757d;
+    margin-top: 10px;
+}
+
+.secondary-button:hover {
+    background: #5a6268;
 } 

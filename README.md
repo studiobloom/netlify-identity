@@ -1,160 +1,114 @@
-# Netlify Identity Template - Embedded Forms Implementation
+# Netlify Identity with Stripe Subscription (Premium Only)
 
-A lightweight template for implementing user authentication using Netlify Identity with custom embedded forms. This template provides a seamless, integrated authentication experience with full control over the UI/UX.
+This project implements a Netlify Identity authentication system with required Stripe subscription for account creation. Every user must be a paying subscriber to create an account.
 
-## Project Structure
+> 🔍 **Looking for a freemium model?** Check out the `freemium` branch if you want optional subscriptions, tiered access (free/premium), and the ability to upgrade accounts later.
+
+## Security First
+
+This project is designed to be completely open source while maintaining security:
+- No sensitive keys or credentials are stored in the repository
+- All sensitive data is managed through Netlify environment variables
+- Stripe integration is handled securely through environment variables
+
+## Setup Instructions
+
+### 1. Netlify Setup
+
+1. Deploy this project to Netlify
+2. Enable Netlify Identity for your site in the Netlify dashboard
+3. Go to Site Settings > Identity > Registration preferences
+4. Set registration to "Invite only" to ensure users can only sign up through your subscription flow
+
+### 2. Stripe Setup
+
+1. Create a Stripe account at https://stripe.com if you haven't already
+2. Create a subscription product and price in your Stripe dashboard
+3. Note down your price ID (starts with 'price_')
+4. Get your Stripe API keys (both publishable and secret keys)
+
+### 3. Environment Variables
+
+Add the following environment variables in your Netlify dashboard (Site Settings > Build & Deploy > Environment):
 
 ```
-├── index.html
-├── app.js
-├── styles.css
-├── netlify.toml
-└── netlify/
-    └── functions/
-        └── init-identity.js
+STRIPE_SECRET_KEY=sk_your_stripe_secret_key
+STRIPE_PUBLISHABLE_KEY=pk_your_stripe_publishable_key
+STRIPE_PRICE_ID=price_your_subscription_price_id
 ```
 
-## Features
+IMPORTANT: Never commit these values to your repository. They should only be set in your Netlify dashboard.
 
-- User authentication (signup, login, logout)
-- Password recovery
-- Email confirmation
-- JWT token handling
-- Serverless functions integration
-- Custom forms integrated directly into your page
-- Full control over UI/UX
-- No popups - seamless user experience
-- Customizable styling and behavior
+## How It Works
 
-## Setup
+1. User enters their email, password, and payment information
+2. The system creates a Stripe subscription using secure environment variables
+3. Upon successful subscription, the system creates a Netlify Identity account
+4. User receives an email confirmation
+5. After confirming email, user can log in
 
-1. Clone this repository:
-   ```bash
-   git clone https://github.com/studiobloom/netlify-identity.git
-   ```
+## Development
 
-2. Enable Identity in your Netlify site:
-   - Go to your site settings in Netlify
-   - Navigate to Identity
-   - Click "Enable Identity"
+To run locally:
 
-3. Configure Identity settings:
-   - Set registration preferences (open/invite only)
-   - Configure external providers (optional)
-   - Set password recovery and confirmation email templates
-
-4. Deploy to Netlify:
-   ```bash
-   git push
-   ```
-
-## Usage
-
-The template uses custom forms that interact directly with Netlify's Identity API. Here's how to use it:
-
-```javascript
-// Handle signup
-document.getElementById('signup-form').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const email = document.getElementById('signup-email').value;
-  const password = document.getElementById('signup-password').value;
-
-  try {
-    const response = await fetch('/.netlify/identity/signup', {
-      method: 'POST',
-      body: JSON.stringify({ email, password }),
-      headers: { 'Content-Type': 'application/json' }
-    });
-    const user = await response.json();
-    console.log('Signed up:', user);
-  } catch (error) {
-    console.error('Signup error:', error);
-  }
-});
-
-// Handle login
-document.getElementById('login-form').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const email = document.getElementById('login-email').value;
-  const password = document.getElementById('login-password').value;
-
-  try {
-    const response = await fetch('/.netlify/identity/token', {
-      method: 'POST',
-      body: JSON.stringify({ email, password }),
-      headers: { 'Content-Type': 'application/json' }
-    });
-    const token = await response.json();
-    localStorage.setItem('netlifyIdentityToken', token);
-    console.log('Logged in successfully');
-  } catch (error) {
-    console.error('Login error:', error);
-  }
-});
-
-// Handle logout
-function logout() {
-  localStorage.removeItem('netlifyIdentityToken');
-  // Additional cleanup as needed
-}
-
-// Check authentication status
-function isAuthenticated() {
-  return !!localStorage.getItem('netlifyIdentityToken');
-}
-
-// Get current user data
-async function getCurrentUser() {
-  const token = localStorage.getItem('netlifyIdentityToken');
-  if (!token) return null;
-
-  try {
-    const response = await fetch('/.netlify/identity/user', {
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-    });
-    return await response.json();
-  } catch (error) {
-    console.error('Error getting user:', error);
-    return null;
-  }
-}
+1. Install dependencies:
+```bash
+cd netlify/functions
+npm install
 ```
 
-## Environment Variables
-
-Create a `.env` file with:
-```
-NETLIFY_IDENTITY_ENDPOINT=your-site-name.netlify.app/.netlify/identity
+2. Install Netlify CLI:
+```bash
+npm install -g netlify-cli
 ```
 
-## HTML Form Examples
+3. Create a `.env.local` file (DO NOT COMMIT THIS FILE):
+```bash
+STRIPE_PUBLISHABLE_KEY=pk_test_...
+STRIPE_SECRET_KEY=sk_test_...
+STRIPE_PRICE_ID=price_...
+```
 
-```html
-<!-- Signup Form -->
-<form id="signup-form">
-  <input type="email" id="signup-email" required>
-  <input type="password" id="signup-password" required>
-  <button type="submit">Sign Up</button>
-</form>
-
-<!-- Login Form -->
-<form id="login-form">
-  <input type="email" id="login-email" required>
-  <input type="password" id="login-password" required>
-  <button type="submit">Log In</button>
-</form>
+4. Run the development server:
+```bash
+netlify dev
 ```
 
 ## Contributing
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+## Security Notes
 
-## License
+- NO sensitive data is stored in the repository
+- All API keys and secrets are managed through Netlify environment variables
+- The `.gitignore` file includes `.env` and `.env.local` to prevent accidental commits
+- Stripe Elements handles payment information client-side
+- All sensitive operations happen in Netlify Functions
+- No sensitive data touches your application server
 
-This project is licensed under the MIT License - see the LICENSE file for details. 
+## Files Structure
+
+```
+├── index.html              # Main HTML file with auth forms
+├── app.js                  # Frontend JavaScript (no sensitive data)
+├── styles.css             # Styles including Stripe Elements
+├── netlify/functions/
+│   ├── create-subscription.js   # Handles Stripe subscription
+│   ├── init-identity.js         # Verifies subscription before signup
+│   └── package.json            # Function dependencies
+└── netlify.toml           # Netlify configuration
+```
+
+## Troubleshooting
+
+- If users can't sign up, check Netlify Identity settings
+- For payment issues, check Stripe Dashboard > Events
+- For function errors, check Netlify Functions log
+- Verify all environment variables are set in Netlify dashboard
+
+## Support
+
+For issues:
+1. Check Netlify Function logs
+2. Check Stripe Dashboard events
+3. Ensure all environment variables are set in Netlify dashboard
+4. Verify Stripe price ID is correct 

@@ -1,6 +1,7 @@
 [build]
   publish = "."
   functions = "netlify/functions"
+  command = "node build.js"
 
 [[redirects]]
   from = "/*"
@@ -11,4 +12,8 @@
   functions = "netlify/functions"
 
 [template.environment]
-  NETLIFY_IDENTITY_ENABLED = "true" 
+  NETLIFY_IDENTITY_ENABLED = "true"
+  STRIPE_PUBLISHABLE_KEY = "Enter your Stripe publishable key (starts with pk_)"
+
+[[plugins]]
+package = "@netlify/plugin-functions-install-core" 

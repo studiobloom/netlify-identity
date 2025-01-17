@@ -1,0 +1,13 @@
+{
+  "name": "netlify-identity-premium",
+  "version": "1.0.0",
+  "description": "Netlify Identity with required Stripe subscription",
+  "dependencies": {
+    "stripe": "^13.10.0",
+    "node-fetch": "^2.6.1"
+  },
+  "scripts": {
+    "dev": "netlify dev",
+    "build": "netlify build"
+  }
+} 

@@ -24,41 +24,41 @@ exports.handler = async (event, context) => {
       limit: 1
     });
 
+    // If no customer found in Stripe, they're a free user
     if (!customers.data.length) {
       return {
-        statusCode: 403,
-        body: JSON.stringify({ error: 'No subscription found' })
+        statusCode: 200,
+        body: JSON.stringify({ 
+          active: false,
+          message: 'Free account'
+        })
       };
     }
 
     const customer = customers.data[0];
 
-    // Verify subscription status
+    // Check subscription status in Stripe
     const subscriptions = await stripe.subscriptions.list({
       customer: customer.id,
       status: 'active',
       limit: 1
     });
 
-    if (!subscriptions.data.length) {
-      return {
-        statusCode: 403,
-        body: JSON.stringify({ error: 'Active subscription required' })
-      };
-    }
+    const hasActiveSubscription = subscriptions.data.length > 0;
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ 
-        message: "Identity initialized",
-        subscription: subscriptions.data[0].id
+      body: JSON.stringify({
+        active: hasActiveSubscription,
+        message: hasActiveSubscription ? 'Premium account' : 'Free account',
+        subscription: hasActiveSubscription ? subscriptions.data[0] : null
       })
     };
   } catch (error) {
-    console.error('Subscription verification error:', error);
+    console.error('Subscription status error:', error);
     return {
       statusCode: 400,
       body: JSON.stringify({ error: error.message })
     };
   }
-}; 
+} 
