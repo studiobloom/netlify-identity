@@ -1,8 +1,6 @@
-# Netlify Identity with Stripe Subscription (Premium Only)
+# Netlify Identity with Stripe Integration (Freemium)
 
-This project implements a Netlify Identity authentication system with required Stripe subscription for account creation. Every user must be a paying subscriber to create an account.
-
-> 🔍 **Looking for a freemium model?** Check out the `freemium` branch if you want optional subscriptions, tiered access (free/premium), and the ability to upgrade accounts later.
+This project implements a Netlify Identity authentication system with optional Stripe subscriptions for premium features. Users can create free accounts and upgrade to premium when needed.
 
 ## Security First
 
@@ -18,12 +16,12 @@ This project is designed to be completely open source while maintaining security
 1. Deploy this project to Netlify
 2. Enable Netlify Identity for your site in the Netlify dashboard
 3. Go to Site Settings > Identity > Registration preferences
-4. Set registration to "Invite only" to ensure users can only sign up through your subscription flow
+4. Configure registration settings based on your needs (open or invite-only)
 
 ### 2. Stripe Setup
 
 1. Create a Stripe account at https://stripe.com if you haven't already
-2. Create a subscription product and price in your Stripe dashboard
+2. Create a subscription product and price in your Stripe dashboard for premium features
 3. Note down your price ID (starts with 'price_')
 4. Get your Stripe API keys (both publishable and secret keys)
 
@@ -41,11 +39,11 @@ IMPORTANT: Never commit these values to your repository. They should only be set
 
 ## How It Works
 
-1. User enters their email, password, and payment information
-2. The system creates a Stripe subscription using secure environment variables
-3. Upon successful subscription, the system creates a Netlify Identity account
-4. User receives an email confirmation
-5. After confirming email, user can log in
+1. Users can sign up for free accounts with email and password
+2. Free users have access to basic features
+3. Users can upgrade to premium by subscribing through Stripe
+4. Premium users get access to additional features
+5. Subscriptions can be managed (upgraded, cancelled, payment methods updated)
 
 ## Development
 
@@ -74,7 +72,22 @@ STRIPE_PRICE_ID=price_...
 netlify dev
 ```
 
-## Contributing
+## Files Structure
+
+```
+├── index.html                    # Main HTML file with auth forms
+├── app.js                        # Frontend JavaScript
+├── styles.css                    # Styles including Stripe Elements
+├── netlify/functions/
+│   ├── create-subscription.js    # Handles premium upgrades
+│   ├── cancel-subscription.js    # Handles subscription cancellation
+│   ├── check-subscription-status.js  # Checks user's premium status
+│   ├── update-payment-method.js  # Updates payment information
+│   ├── init-identity.js         # Handles user signup
+│   ├── stripe-webhook.js        # Processes Stripe events
+│   └── package.json            # Function dependencies
+└── netlify.toml                # Netlify configuration
+```
 
 ## Security Notes
 
@@ -84,19 +97,6 @@ netlify dev
 - Stripe Elements handles payment information client-side
 - All sensitive operations happen in Netlify Functions
 - No sensitive data touches your application server
-
-## Files Structure
-
-```
-├── index.html              # Main HTML file with auth forms
-├── app.js                  # Frontend JavaScript (no sensitive data)
-├── styles.css             # Styles including Stripe Elements
-├── netlify/functions/
-│   ├── create-subscription.js   # Handles Stripe subscription
-│   ├── init-identity.js         # Verifies subscription before signup
-│   └── package.json            # Function dependencies
-└── netlify.toml           # Netlify configuration
-```
 
 ## Troubleshooting
 
