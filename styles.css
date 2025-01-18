@@ -84,13 +84,48 @@ button:hover {
 }
 
 .info-message {
-    color: #28a745;
+    color: #0c5460;
     background: #d1ecf1;
-    border: 1px solid #beebc8;
+    border: 1px solid #bee5eb;
     padding: 10px;
     border-radius: 4px;
     margin-bottom: 15px;
     display: none;
+}
+
+.loader-container {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.loader {
+    width: 40px;
+    height: 40px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #007bff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.button-with-loader {
+    position: relative;
+}
+
+.button-with-loader .loader {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    border-width: 2px;
 }
 
 #subscription-info {

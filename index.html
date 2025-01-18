@@ -20,6 +20,9 @@
             <!-- Login Form -->
             <form id="login-form" class="auth-form">
                 <h2>Sign In</h2>
+                <div class="loader-container" id="login-loader">
+                    <div class="loader"></div>
+                </div>
                 <div class="form-group">
                     <input type="email" id="login-email" placeholder="Email" required>
                 </div>
@@ -35,6 +38,9 @@
             <!-- Signup Form with Subscription Choice -->
             <form id="signup-form" class="auth-form" style="display: none;">
                 <h2>Create Account</h2>
+                <div class="loader-container" id="signup-loader">
+                    <div class="loader"></div>
+                </div>
                 <div class="form-group">
                     <input type="email" id="signup-email" placeholder="Email" required>
                 </div>
@@ -79,6 +85,9 @@
             <div id="subscription-info">
                 <div class="subscription-status">
                     <h3>Subscription Status</h3>
+                    <div class="loader-container" id="subscription-loader">
+                        <div class="loader"></div>
+                    </div>
                     <p id="subscription-status-message">Loading...</p>
                 </div>
                 <div id="upgrade-section" style="display: none;">

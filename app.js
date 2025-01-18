@@ -110,6 +110,21 @@ if (window.location.hash && window.location.hash.includes('confirmation_token=')
     document.body.style.display = 'block';
 }
 
+// Helper functions to show/hide loaders
+function showLoader(id) {
+    const loader = document.getElementById(id);
+    if (loader) {
+        loader.style.display = 'flex';
+    }
+}
+
+function hideLoader(id) {
+    const loader = document.getElementById(id);
+    if (loader) {
+        loader.style.display = 'none';
+    }
+}
+
 // Handle user state changes
 async function handleUserLoggedIn(user) {
     try {
@@ -126,8 +141,11 @@ async function handleUserLoggedIn(user) {
         document.getElementById('user-name').textContent = user.email;
 
         // Check subscription status
+        showLoader('subscription-loader');
         await checkSubscriptionStatus(user);
+        hideLoader('subscription-loader');
     } catch (error) {
+        hideLoader('subscription-loader');
         console.error('Error handling user login:', error);
         showError('user-info', 'Error verifying user status. Please try logging in again.');
         setTimeout(() => {
@@ -190,6 +208,7 @@ async function handleUpgradeSubmission() {
 // Form handling
 document.getElementById('login-form').addEventListener('submit', async (e) => {
     e.preventDefault();
+    showLoader('login-loader');
     const email = document.getElementById('login-email').value;
     const password = document.getElementById('login-password').value;
     
@@ -199,11 +218,14 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
         handleUserLoggedIn(response);
     } catch (error) {
         showError('login-form', error.message);
+    } finally {
+        hideLoader('login-loader');
     }
 });
 
 document.getElementById('signup-form').addEventListener('submit', async (e) => {
     e.preventDefault();
+    showLoader('signup-loader');
     const email = document.getElementById('signup-email').value;
     const password = document.getElementById('signup-password').value;
     const accountType = document.querySelector('input[name="account-type"]:checked').value;
@@ -256,11 +278,14 @@ document.getElementById('signup-form').addEventListener('submit', async (e) => {
         }
     } catch (error) {
         showError('signup-form', error.message);
+    } finally {
+        hideLoader('signup-loader');
     }
 });
 
 async function checkSubscriptionStatus(user) {
     try {
+        showLoader('subscription-loader');
         const response = await fetch('/.netlify/functions/check-subscription-status', {
             method: 'POST',
             headers: {
@@ -299,6 +324,8 @@ async function checkSubscriptionStatus(user) {
     } catch (error) {
         console.error('Error checking subscription:', error);
         document.getElementById('subscription-status-message').textContent = 'Error checking subscription status';
+    } finally {
+        hideLoader('subscription-loader');
     }
 }
 
