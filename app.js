@@ -97,6 +97,19 @@ function toggleForms(formToShow) {
     }
 }
 
+// Handle confirmation tokens in URL
+if (window.location.hash && window.location.hash.includes('confirmation_token=')) {
+    // Hide the body immediately
+    document.body.style.display = 'none';
+    netlifyIdentity.on('login', user => {
+        // Remove the hash and refresh the page
+        window.location.href = window.location.pathname;
+    });
+} else {
+    // Ensure body is visible if no confirmation token
+    document.body.style.display = 'block';
+}
+
 // Handle user state changes
 async function handleUserLoggedIn(user) {
     try {
@@ -239,7 +252,7 @@ document.getElementById('signup-form').addEventListener('submit', async (e) => {
         if (user.confirmed_at) {
             handleUserLoggedIn(user);
         } else {
-            showError('signup-form', 'Please confirm your email address to complete signup');
+            showInfo('signup-form', 'Please check your email to confirm your account before logging in.');
         }
     } catch (error) {
         showError('signup-form', error.message);
@@ -347,4 +360,18 @@ function showError(formId, message) {
     setTimeout(() => {
         errorDiv.style.display = 'none';
     }, 5000);
-} 
+}
+
+function showInfo(formId, message) {
+    const form = document.getElementById(formId);
+    let infoDiv = form.querySelector('.info-message');
+    
+    if (!infoDiv) {
+        infoDiv = document.createElement('div');
+        infoDiv.className = 'info-message';
+        form.insertBefore(infoDiv, form.firstChild);
+    }
+    
+    infoDiv.textContent = message;
+    infoDiv.style.display = 'block';
+}

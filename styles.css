@@ -83,6 +83,16 @@ button:hover {
     display: none;
 }
 
+.info-message {
+    color: #28a745;
+    background: #d1ecf1;
+    border: 1px solid #beebc8;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    display: none;
+}
+
 #subscription-info {
     margin: 20px 0;
     padding: 15px;
