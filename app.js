@@ -75,7 +75,16 @@ document.getElementById('upgrade-subscription').addEventListener('click', functi
         card.mount('#upgrade-card');
         this.textContent = 'Confirm Upgrade';
     } else {
-        handleUpgradeSubmission();
+        this.classList.add('button-with-loader');
+        const loader = document.createElement('div');
+        loader.className = 'loader';
+        this.appendChild(loader);
+        this.disabled = true;
+        handleUpgradeSubmission().finally(() => {
+            this.classList.remove('button-with-loader');
+            this.removeChild(loader);
+            this.disabled = false;
+        });
     }
 });
 
@@ -156,6 +165,7 @@ async function handleUserLoggedIn(user) {
 
 // Handle the actual upgrade submission
 async function handleUpgradeSubmission() {
+    const button = document.getElementById('upgrade-subscription');
     try {
         const {paymentMethod, error} = await stripe.createPaymentMethod({
             type: 'card',
@@ -196,7 +206,7 @@ async function handleUpgradeSubmission() {
         
         // Reset upgrade section
         document.getElementById('upgrade-payment-info').style.display = 'none';
-        document.getElementById('upgrade-subscription').textContent = 'Upgrade to Premium';
+        button.textContent = 'Upgrade to Premium';
     } catch (error) {
         const displayError = document.querySelector('.card-errors');
         if (displayError) {
@@ -229,9 +239,17 @@ document.getElementById('signup-form').addEventListener('submit', async (e) => {
     const email = document.getElementById('signup-email').value;
     const password = document.getElementById('signup-password').value;
     const accountType = document.querySelector('input[name="account-type"]:checked').value;
+    const signupButton = document.getElementById('signup-button');
     
     try {
         if (accountType === 'premium') {
+            // Add loader to button
+            signupButton.classList.add('button-with-loader');
+            const loader = document.createElement('div');
+            loader.className = 'loader';
+            signupButton.appendChild(loader);
+            signupButton.disabled = true;
+
             // Handle premium signup with Stripe
             const {paymentMethod, error} = await stripe.createPaymentMethod({
                 type: 'card',
@@ -280,6 +298,14 @@ document.getElementById('signup-form').addEventListener('submit', async (e) => {
         showError('signup-form', error.message);
     } finally {
         hideLoader('signup-loader');
+        if (accountType === 'premium') {
+            signupButton.classList.remove('button-with-loader');
+            const loader = signupButton.querySelector('.loader');
+            if (loader) {
+                signupButton.removeChild(loader);
+            }
+            signupButton.disabled = false;
+        }
     }
 });
 
